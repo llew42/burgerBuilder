@@ -1,4 +1,4 @@
-import React, {useEffect, lazy} from 'react'
+import React, {useEffect, lazy, Suspense} from 'react'
 import './App.css'
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder'
 import Layout from './hoc/Layout/Layout'
@@ -15,14 +15,14 @@ function App() {
   const dispatch = useDispatch(actions.authStateCheck())
   useEffect(() => {
     dispatch(actions.authStateCheck())
-  })
+  }, [dispatch])
 
   const isAuthenticated = useSelector(state => state.auth.token)
 
   let routes = (
     <Switch>
       <Route path="/" component={BurgerBuilder} exact />
-      <Route path="/auth" component={Auth} />
+      <Route path="/auth" render={props => <Auth {...props} />} />
       <Redirect to="/" />
     </Switch>
   )
@@ -30,17 +30,21 @@ function App() {
   if (isAuthenticated) {
     routes = (
       <Switch>
-        <Route path="/orders" component={Orders} />
-        <Route path="/checkout" component={Checkout} />
+        <Route path="/orders" render={props => <Orders {...props} />} />
+        <Route path="/checkout" render={props => <Checkout {...props} />} />
         <Route path="/logout" component={Logout} />
-        <Route path="/auth" component={Auth} />
+        <Route path="/auth" render={props => <Auth {...props} />} />
         <Route path="/" component={BurgerBuilder} exact />
         <Redirect to="/" />
       </Switch>
     )
   }
 
-  return <Layout>{routes}</Layout>
+  return (
+    <Layout>
+      <Suspense fallback={<p>Loading...</p>}>{routes}</Suspense>
+    </Layout>
+  )
 }
 
 export default withRouter(App)

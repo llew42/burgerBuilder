@@ -42,11 +42,13 @@ const Auth = props => {
 
   const dispatch = useDispatch(actions.setAuthRedirect())
 
+  const {buildingBurger, authRedirect} = props
+
   useEffect(() => {
-    if (!props.buildingBurger && props.authRedirect !== '/') {
+    if (!buildingBurger && authRedirect !== '/') {
       dispatch(actions.setAuthRedirect('/'))
     }
-  }, [dispatch, props.buildingBurger, props.authRedirect])
+  }, [dispatch, buildingBurger, authRedirect])
 
   const formElementsArray = []
   for (let key in user) {
@@ -90,9 +92,9 @@ const Auth = props => {
     errorMessage = <p>{props.error.message}</p>
   }
 
-  let authRedirect = null
+  let redirectAuthorization = null
   if (props.isAuthenticated) {
-    authRedirect = <Redirect to={props.authRedirect} />
+    redirectAuthorization = <Redirect to={props.authRedirect} />
   }
 
   const submitHandler = e => {
@@ -106,7 +108,7 @@ const Auth = props => {
 
   return (
     <div>
-      {authRedirect}
+      {redirectAuthorization}
       {errorMessage}
       <form onSubmit={submitHandler}>
         {form}

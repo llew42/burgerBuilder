@@ -2,7 +2,7 @@ import React from 'react'
 import Aux from '../../../hoc/Aux/Aux'
 import Button from '../../UI/Button/Button'
 
-function OrderSummary(props) {
+const orderSummary = props => {
   const ingredientSummary = Object.keys(props.ingredients).map(i => {
     return (
       <li key={i}>
@@ -33,4 +33,4 @@ function OrderSummary(props) {
   )
 }
 
-export default OrderSummary
+export default orderSummary

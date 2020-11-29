@@ -4,7 +4,7 @@ import ContactData from './ContactData/ContactData'
 import {Route, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-function Checkout(props) {
+const checkout = props => {
   const checkoutCancelled = () => {
     props.history.goBack()
   }
@@ -41,4 +41,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Checkout)
+export default connect(mapStateToProps)(checkout)

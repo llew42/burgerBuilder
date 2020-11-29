@@ -9,7 +9,7 @@ const SideDrawer = lazy(() =>
   import('../../components/Navigation/SideDrawer/SideDrawer')
 )
 
-function Layout(props) {
+const Layout = props => {
   const [showSideDrawer, setShowSideDrawer] = useState(false)
 
   const sideDrawerClosed = () => {
@@ -17,9 +17,7 @@ function Layout(props) {
   }
 
   const sideDrawerToggle = () => {
-    setShowSideDrawer(prevState => {
-      return {showSideDrawer: !prevState.showSideDrawer}
-    })
+    setShowSideDrawer(!showSideDrawer)
   }
 
   return (
